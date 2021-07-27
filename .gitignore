@@ -3,3 +3,8 @@
 ################################################################################
 
 /Library
+/.vs/EvaluationDemo/v16
+/obj/Debug
+*.sln
+*.csproj
+/Assets/TextMesh Pro
