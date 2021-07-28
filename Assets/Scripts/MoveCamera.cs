@@ -6,25 +6,45 @@ public class MoveCamera : MonoBehaviour
 {
     public Transform Player;
     public Transform cameraInitPos;
+   
+
+    public delegate void ParallaxCameraDelegate(float deltaMovement);
+    public ParallaxCameraDelegate onCameraTranslate;
+
+    private float oldPosition;
     private Vector3 previousPlayerPos;
-    private Vector3 playerXOffset = new Vector3(9, 0, 0);
 
     public void Start()
     {
+        oldPosition = transform.position.x;
         previousPlayerPos = Player.position;
     }
 
     void Update()
     {
-        Vector3 tempPos = (Player.position) - previousPlayerPos;
-        //Vector3.Distance(Player.position, previousPlayerPos);
-        transform.position = new Vector3(transform.position.x + tempPos.x, transform.position.y, transform.position.z) ;//Adds x difference for camera
-        previousPlayerPos = Player.position;
+        GameState gsInstace = GameControl.instance.GetGameState();
+        if (gsInstace > GameState.NewGame && gsInstace < GameState.EndRace && gsInstace != GameState.Pause)
+        {
+            Vector3 tempPos = (Player.position) - previousPlayerPos;
+            transform.position = new Vector3(transform.position.x + tempPos.x, transform.position.y, transform.position.z);//Adds x difference for camera
+            previousPlayerPos = Player.position;
+
+            if (transform.position.x != oldPosition)
+            {
+                if (onCameraTranslate != null)
+                {
+                    float delta = oldPosition - transform.position.x;
+                    onCameraTranslate(delta);
+                }
+                oldPosition = transform.position.x;
+            }
+        }
     }
 
     public void ResetCamera()
     {
         transform.position = cameraInitPos.position;
         previousPlayerPos = Player.position;
+        oldPosition = transform.position.x;
     }
 }

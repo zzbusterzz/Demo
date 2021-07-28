@@ -18,16 +18,18 @@ public class GameControl : MonoBehaviour
     public AIMove aiPlayer;
     public PlayerMove user;
     public MoveCamera gameCamera;
-    public gameUIControl gameUIControl;
+    public GameUIControl gameUIControl;
     public MenuUIControl menuUIControl;
 
+    public Transform beginPoint;
+    public Transform endPoint;
     public GameState GS = GameState.Pause;
     
     private int timerCount = 3;
     private bool isWaiting = false;
     private GameObject winner = null;
     private Coroutine displayTextCoroutine = null;
-
+    private int SingleTrackLength = 25;
     private GameState prevGS = GameState.NewGame;
 
     public void Start()
@@ -50,8 +52,12 @@ public class GameControl : MonoBehaviour
         switch (GS)
         {
             case GameState.NewGame:
-                SpawnObjects.instance.ResetObjects();
-                
+
+
+
+                int finalTrackLength = SingleTrackLength * Random.Range(5, 10);
+                endPoint.position = beginPoint.transform.position + Vector3.right * finalTrackLength;
+
                 aiPlayer.ResetAI();
                 user.ResetPlayer();
                 gameCamera.ResetCamera();
@@ -60,6 +66,7 @@ public class GameControl : MonoBehaviour
                 gameUIControl.ToggleIngameUI(true);
                 winner = null;
                 isWaiting = false;
+                SpawnObjects.instance.ResetObjects();
 
                 GS++;
                 
@@ -96,7 +103,7 @@ public class GameControl : MonoBehaviour
             case GameState.EndRace:
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
-                    GS = GameState.NewGame;
+                    NewGame();
                     //Restart Code here
                 }
                 break;
@@ -106,6 +113,7 @@ public class GameControl : MonoBehaviour
     public void NewGame()
     {
         GS = GameState.NewGame;
+        SpawnObjects.instance.ResetObjects();
     }
      
 
@@ -149,6 +157,11 @@ public class GameControl : MonoBehaviour
             gameUIControl.GameText("Winner is : " + winner.name + "\n Press Enter To Restart");
             GS++;
         }
+    }
+
+    public GameState GetGameState()
+    {
+        return GS;
     }
 
     IEnumerator DisplayRemainingTime()

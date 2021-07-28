@@ -8,16 +8,17 @@ public class PlayerMove : MonoBehaviour
     private float rateofChange = 0;
     private float dampning = 0.1f;
 
-    private float acceleration = 4f;
+    private float acceleration = 5f;
     private float brakedampen = 1.5f;
     private float dampen = 1.5f;
-    private float maxSpeed = 12;
-    private float speed = 0;    
+    private float maxSpeed = 6;
+    private float speed = 0;
 
+    public bool endMove = false;
     // Update is called once per frame
     void Update()
     {
-        if(control.GS == GameState.StartRace || control.GS ==  GameState.CheckWinner)//Move player on start
+        if(control.GS == GameState.StartRace || control.GS ==  GameState.CheckWinner || endMove)//Move player on start
         {
             Vector3 position = transform.position;
 
@@ -29,14 +30,14 @@ public class PlayerMove : MonoBehaviour
             //  speed = maxSpeed;
 
 
-            if (Input.GetKey(KeyCode.RightArrow))
+            if (Input.GetKey(KeyCode.RightArrow) && !endMove)
             {
                 speed += acceleration * Time.deltaTime;
             }
 
             speed -= dampen * Time.deltaTime;
 
-            if (Input.GetKey(KeyCode.LeftArrow))
+            if (Input.GetKey(KeyCode.LeftArrow) && !endMove)
             {
                 speed -= dampen * Time.deltaTime;
             }
@@ -65,8 +66,16 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+    public void BeginEndMove()
+    {
+        endMove = true;
+        dampen = 7.5f;
+    }
+
     public void ResetPlayer()
     {
+        endMove = false;
+        dampen = 1.5f;
         transform.position = initPos.position;
         speed = 0;
     }

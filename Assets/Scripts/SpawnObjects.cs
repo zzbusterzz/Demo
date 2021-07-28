@@ -41,22 +41,23 @@ public class RespawnObjects
         if(pos.x < -0.1f)
         {
             //Move the object infront queue
-            GameObject cObj = objects[0];
+            GameObject cObj = modifiedObj[0];
             Transform f_begin = beginP[0];//Get begin child
             Transform f_end = endP[0];//Get end child
 
-            objects.RemoveAt(0);
+            modifiedObj.RemoveAt(0);
             beginP.RemoveAt(0);
             endP.RemoveAt(0);
 
-            GameObject lastObject = objects[objects.Count - 1];
-            Transform l_end = endP[objects.Count - 1];//Get begin child
+            GameObject lastObject = modifiedObj[modifiedObj.Count - 1];
+            Transform l_end = endP[modifiedObj.Count - 1];//Get begin child
 
             Vector3 newObjPosition = l_end.position + (cObj.transform.position - f_begin.position);
-            cObj.transform.position = newObjPosition;
+            cObj.transform.position = new Vector3(newObjPosition.x, cObj.transform.position.y, cObj.transform.position.z);
+            //newObjPosition;
 
             //Readd removed objects
-            objects.Add(cObj);
+            modifiedObj.Add(cObj);
             beginP.Add(f_begin);
             endP.Add(f_end);
 
@@ -81,7 +82,9 @@ public class SpawnObjects : MonoBehaviour
 {
     public static SpawnObjects instance;
     public RespawnObjects[] respawns;
-    
+
+    public RespawnObjects[] randomRespawn;
+
     public void Start()
     {
         instance = this;
@@ -91,10 +94,18 @@ public class SpawnObjects : MonoBehaviour
 
     public void Update()
     {
-        for(int i=0; i < respawns.Length; i++) 
+        if (GameControl.instance.GetGameState() != GameState.NewGame)
         {
-            respawns[i].UpdatePositionOnPassingEdgeofCam();
-        }        
+            for (int i = 0; i < respawns.Length; i++)
+            {
+                respawns[i].UpdatePositionOnPassingEdgeofCam();
+            }
+
+            for (int i = 0; i < randomRespawn.Length; i++)
+            {
+                randomRespawn[i].UpdatePositionOnPassingEdgeofCam();
+            }
+        }
     }
 
     public void ResetObjects()
@@ -102,6 +113,11 @@ public class SpawnObjects : MonoBehaviour
         for (int i = 0; i < respawns.Length; i++)
         {
             respawns[i].ResetAssetPositions();
+        }
+
+        for (int i = 0; i < randomRespawn.Length; i++)
+        {
+            randomRespawn[i].ResetAssetPositions();
         }
     }
 }
