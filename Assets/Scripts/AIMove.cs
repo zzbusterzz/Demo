@@ -6,7 +6,7 @@ public class AIMove : MonoBehaviour
 {
     public Transform initPos;
     private bool movePlayer = false;
-    private float speed = 5f;
+    private float speed = 4.5f;
 
     // Update is called once per frame
     void Update()

@@ -11,7 +11,7 @@ public class PlayerMove : MonoBehaviour
     private float acceleration = 5f;
     private float brakedampen = 1.5f;
     private float dampen = 1.5f;
-    private float maxSpeed = 6;
+    private float maxSpeed = 5;
     private float speed = 0;
 
     public bool endMove = false;
@@ -69,7 +69,7 @@ public class PlayerMove : MonoBehaviour
     public void BeginEndMove()
     {
         endMove = true;
-        dampen = 7.5f;
+        dampen = 6.5f;
     }
 
     public void ResetPlayer()
