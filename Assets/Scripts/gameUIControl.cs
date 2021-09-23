@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,10 +8,8 @@ public class GameUIControl : MonoBehaviour
     public static GameUIControl instance;
 
     public GameObject ingameUI;
-
     public Image trafficImage;
     public TMP_Text displayText;
-
     public Sprite[] trafficSprite;
 
     private float fadeTimeSpeed = 1f;

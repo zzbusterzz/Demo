@@ -23,13 +23,14 @@ public class GameControl : MonoBehaviour
 
     public Transform beginPoint;
     public Transform endPoint;
-    public GameState GS = GameState.Pause;
+    public GameState currentGS = GameState.Pause;
     
     private int timerCount = 3;
+    private int singleTrackLength = 25;
+    private float currentTime = 0f;
     private bool isWaiting = false;
     private GameObject winner = null;
     private Coroutine displayTextCoroutine = null;
-    private int SingleTrackLength = 25;
     private GameState prevGS = GameState.NewGame;
 
     public void Start()
@@ -43,19 +44,19 @@ public class GameControl : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (GS == GameState.Pause && menuUIControl.GetResumeButtonState())
+            if (currentGS == GameState.Pause && menuUIControl.GetResumeButtonState())
                 ResumeGame();
             else
                 PauseGame();
         }
 
-        switch (GS)
+        switch (currentGS)
         {
             case GameState.NewGame:
+                if (displayTextCoroutine != null)
+                    StopCoroutine(displayTextCoroutine);
 
-
-
-                int finalTrackLength = SingleTrackLength * Random.Range(5, 10);
+                int finalTrackLength = singleTrackLength * Random.Range(5, 10);
                 endPoint.position = beginPoint.transform.position + Vector3.right * finalTrackLength;
 
                 aiPlayer.ResetAI();
@@ -68,43 +69,32 @@ public class GameControl : MonoBehaviour
                 isWaiting = false;
                 SpawnObjects.instance.ResetObjects();
 
-                GS++;
+                currentGS++;
                 
                 break;
 
-            //case GameState.PressToStart:
-            //    InGameUIControl.instance.ToggleGameText(true, false);
-            //    InGameUIControl.instance.GameText("Press Enter to Start Game");
-
-            //    if (Input.GetKeyDown(KeyCode.Return))//Goes to wait time
-            //    {
-            //        winner = null;
-            //        isWaiting = false;
-            //        GS++;
-            //    }
-            //    break;
-
             case GameState.WaitTime:
                 menuUIControl.UpdateResumeButtonState(true);
-                if (!isWaiting)
-                    WaitForRaceToBegin();
+               
+                WaitForRaceToBegin();
                 break;
 
             case GameState.StartRace:
                 aiPlayer.StartMove();
-                GS++;
+                currentGS++;
                 break;
 
             case GameState.CheckWinner:
                 if (winner != null)//Check for the winner here
-                    GS++;
+                    currentGS++;
                 break;
 
             case GameState.EndRace:
+                menuUIControl.UpdateResumeButtonState(false);
                 if (Input.GetKeyDown(KeyCode.Return))
                 {
-                    NewGame();
                     //Restart Code here
+                    NewGame();                    
                 }
                 break;
         }
@@ -112,38 +102,54 @@ public class GameControl : MonoBehaviour
 
     public void NewGame()
     {
-        GS = GameState.NewGame;
+        currentGS = GameState.NewGame;
         SpawnObjects.instance.ResetObjects();
     }
      
 
     public void PauseGame()
     {
-        prevGS = GS;
+        prevGS = currentGS;
         gameUIControl.ToggleIngameUI(false);
         menuUIControl.ToggleMenuUI(true);
-        GS = GameState.Pause;
+        currentGS = GameState.Pause;
         aiPlayer.StopMove();
     }
 
     public void ResumeGame()
     {
-        GS = prevGS;
+        currentGS = prevGS;
         gameUIControl.ToggleIngameUI(true);
         menuUIControl.ToggleMenuUI(false);
-        aiPlayer.StartMove();
+        if(currentGS == GameState.StartRace || currentGS == GameState.CheckWinner)
+            aiPlayer.StartMove();
     }
-    
+
     public void WaitForRaceToBegin()
     {
-        timerCount = 3;
-        isWaiting = true;
-        //Debug.Log("Begining Game in ");      
-        gameUIControl.ToggleGameText(true, false);
-        gameUIControl.GameText("Begining Game in");
-        gameUIControl.ToggleTrafficLight(true);
-        
-        StartCoroutine(DisplayRemainingTime());
+        if (!isWaiting)
+        {
+            timerCount = 3;
+            currentTime = 0f;
+            isWaiting = true;
+            //Debug.Log("Begining Game in ");      
+            gameUIControl.ToggleGameText(true, false);
+            gameUIControl.GameText("Begining Game in");
+            gameUIControl.ToggleTrafficLight(true);
+        }
+;
+        if (timerCount - currentTime > 0)
+        {
+            gameUIControl.ChangeTrafficLight(timerCount - 1 - (int)currentTime);
+            currentTime += Time.deltaTime;
+        }
+        else
+        {
+            currentGS++;//Go to begin game
+            displayTextCoroutine = StartCoroutine(DiplayTextFor("Go", 1f));
+            gameUIControl.ToggleTrafficLight(false);
+            isWaiting = false;
+        }
     }
 
     public void UpdateWinner(Transform winner)
@@ -155,32 +161,13 @@ public class GameControl : MonoBehaviour
             gameUIControl.ToggleGameText(true, false);
 
             gameUIControl.GameText("Winner is : " + winner.name + "\n Press Enter To Restart");
-            GS++;
+            currentGS++;
         }
     }
 
     public GameState GetGameState()
     {
-        return GS;
-    }
-
-    IEnumerator DisplayRemainingTime()
-    {
-        gameUIControl.ChangeTrafficLight(timerCount - 1);
-
-        yield return new WaitForSeconds(1f);        
-
-        timerCount--;
-
-        if (timerCount > 0)
-            StartCoroutine(DisplayRemainingTime());
-        else
-        {
-            GS++;//Go to begin game
-            displayTextCoroutine = StartCoroutine(DiplayTextFor("Go", 1f));
-            gameUIControl.ToggleTrafficLight(false);
-            isWaiting = false;
-        }
+        return currentGS;
     }
 
     IEnumerator DiplayTextFor(string text, float duration)

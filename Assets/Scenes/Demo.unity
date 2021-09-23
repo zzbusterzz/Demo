@@ -273,8 +273,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efdf097f54bf98d4796e253a4fe67157, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AIPlayerTransform: {fileID: 1887630617}
-  UserPlayerTransform: {fileID: 789474905}
+  aiPlayerTransform: {fileID: 1887630617}
+  userPlayerTransform: {fileID: 789474905}
 --- !u!50 &51120696
 Rigidbody2D:
   serializedVersion: 4
@@ -446,7 +446,6 @@ GameObject:
   m_Component:
   - component: {fileID: 91979024}
   - component: {fileID: 91979023}
-  - component: {fileID: 91979025}
   m_Layer: 0
   m_Name: RaodAsset3
   m_TagString: 0
@@ -520,18 +519,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &91979025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 91979022}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a94d95eb0f566164a91cc39158f8d28e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &96033296
 GameObject:
   m_ObjectHideFlags: 0
@@ -1880,7 +1867,6 @@ GameObject:
   m_Component:
   - component: {fileID: 646900375}
   - component: {fileID: 646900374}
-  - component: {fileID: 646900376}
   m_Layer: 0
   m_Name: RaodAsset2
   m_TagString: 0
@@ -1954,18 +1940,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &646900376
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 646900373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a94d95eb0f566164a91cc39158f8d28e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2657,8 +2631,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -2777,7 +2751,6 @@ GameObject:
   m_Component:
   - component: {fileID: 842430610}
   - component: {fileID: 842430609}
-  - component: {fileID: 842430611}
   m_Layer: 0
   m_Name: RaodAsset1
   m_TagString: 0
@@ -2851,18 +2824,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &842430611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 842430608}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a94d95eb0f566164a91cc39158f8d28e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &859883756
 GameObject:
   m_ObjectHideFlags: 0
@@ -3273,7 +3234,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 298e23316e205d442a044219238a8bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Player: {fileID: 789474905}
+  player: {fileID: 789474905}
   cameraInitPos: {fileID: 96033297}
 --- !u!114 &963194230
 MonoBehaviour:
@@ -3607,8 +3568,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -3703,7 +3664,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49fe112a7c9f33e41b717f72351f6395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: -0.25
+  parallaxFactor: -0.05
 --- !u!212 &1097579507
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -5413,7 +5374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49fe112a7c9f33e41b717f72351f6395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: -1
+  parallaxFactor: 0
 --- !u!1 &1680007274
 GameObject:
   m_ObjectHideFlags: 0
@@ -5769,8 +5730,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -5980,7 +5941,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49fe112a7c9f33e41b717f72351f6395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: -1
+  parallaxFactor: 0
 --- !u!1 &1786958210
 GameObject:
   m_ObjectHideFlags: 0
@@ -6588,7 +6549,7 @@ MonoBehaviour:
   menuUIControl: {fileID: 726318603}
   beginPoint: {fileID: 1683308155}
   endPoint: {fileID: 51120693}
-  GS: 5
+  currentGS: 5
 --- !u!4 &1924501187
 Transform:
   m_ObjectHideFlags: 0
@@ -6742,7 +6703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49fe112a7c9f33e41b717f72351f6395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: -0.25
+  parallaxFactor: -0.05
 --- !u!1 &1945406813
 GameObject:
   m_ObjectHideFlags: 0
@@ -7117,4 +7078,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49fe112a7c9f33e41b717f72351f6395, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parallaxFactor: -0.25
+  parallaxFactor: -0.05

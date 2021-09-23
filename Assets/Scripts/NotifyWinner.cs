@@ -1,17 +1,15 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class NotifyWinner : MonoBehaviour
 {
-    public Transform AIPlayerTransform;
-    public Transform UserPlayerTransform;
+    public Transform aiPlayerTransform;
+    public Transform userPlayerTransform;
 
     private void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.transform == UserPlayerTransform)
+        if (col.transform == userPlayerTransform)
         {
-            UserPlayerTransform.GetComponent<PlayerMove>().BeginEndMove();
+            userPlayerTransform.GetComponent<PlayerMove>().BeginEndMove();
         }
 
         GameControl.instance.UpdateWinner(col.transform);
@@ -20,9 +18,9 @@ public class NotifyWinner : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D col)
     {
-        if(col.transform == AIPlayerTransform)
+        if(col.transform == aiPlayerTransform)
         {
-            AIPlayerTransform.GetComponent<AIMove>().StopMove();
+            aiPlayerTransform.GetComponent<AIMove>().StopMove();
         }
     }
 }

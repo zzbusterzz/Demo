@@ -9,5 +9,6 @@
 *.csproj
 /Assets/TextMesh Pro
 /Temp
-/Build
 *.zip
+/.vs
+/Build_old

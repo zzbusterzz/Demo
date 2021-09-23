@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class MenuUIControl : MonoBehaviour
@@ -32,7 +30,6 @@ public class MenuUIControl : MonoBehaviour
 
     private void OnUIButtonClick(GameObject button)
     {
-        Debug.Log("Clicked  " + button.name); 
         switch (button.name)
         {
             case "New Game":

@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MoveCamera : MonoBehaviour
 {
-    public Transform Player;
-    public Transform cameraInitPos;
-   
+    public Transform player;
+    public Transform cameraInitPos;   
 
     public delegate void ParallaxCameraDelegate(float deltaMovement);
     public ParallaxCameraDelegate onCameraTranslate;
@@ -17,7 +14,7 @@ public class MoveCamera : MonoBehaviour
     public void Start()
     {
         oldPosition = transform.position.x;
-        previousPlayerPos = Player.position;
+        previousPlayerPos = player.position;
     }
 
     void Update()
@@ -25,9 +22,9 @@ public class MoveCamera : MonoBehaviour
         GameState gsInstace = GameControl.instance.GetGameState();
         if (gsInstace > GameState.NewGame && gsInstace < GameState.EndRace && gsInstace != GameState.Pause)
         {
-            Vector3 tempPos = (Player.position) - previousPlayerPos;
+            Vector3 tempPos = (player.position) - previousPlayerPos;
             transform.position = new Vector3(transform.position.x + tempPos.x, transform.position.y, transform.position.z);//Adds x difference for camera
-            previousPlayerPos = Player.position;
+            previousPlayerPos = player.position;
 
             if (transform.position.x != oldPosition)
             {
@@ -44,7 +41,7 @@ public class MoveCamera : MonoBehaviour
     public void ResetCamera()
     {
         transform.position = cameraInitPos.position;
-        previousPlayerPos = Player.position;
+        previousPlayerPos = player.position;
         oldPosition = transform.position.x;
     }
 }

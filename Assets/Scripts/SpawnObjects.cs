@@ -177,6 +177,7 @@ public class RespawnRandom:RespawnObjects
 public class SpawnObjects : MonoBehaviour
 {
     public static SpawnObjects instance;
+
     public RespawnObjects[] respawns;
 
     public RespawnRandom[] randomRespawn;
